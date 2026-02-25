@@ -191,6 +191,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () => showLicensePage(context: context),
                     ),
+                    const Divider(),
+                    ListTile(
+                      leading: const Icon(Icons.privacy_tip_outlined),
+                      title: const Text('Privacy Policy'),
+                      trailing: const Icon(Icons.chevron_right),
+                      onTap: () => launchUrl(
+                          Uri.parse('https://blog.androiddevapps.com/privacy/')),
+                    ),
                   ],
                 ),
 
