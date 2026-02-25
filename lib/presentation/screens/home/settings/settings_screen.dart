@@ -133,7 +133,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () async {
                         await ref.read(newsRepositoryProvider).clearCache();
-                        if (mounted) {
+                        if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Cache cleared')),
                           );
@@ -148,7 +148,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       trailing: const Icon(Icons.chevron_right),
                       onTap: () async {
                         await ref.read(localDatasourceProvider).clearReadHistory();
-                        if (mounted) {
+                        if (context.mounted) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('Read history cleared')),
                           );

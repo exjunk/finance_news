@@ -43,7 +43,7 @@ final usdInrRateProvider =
 });
 
 // Extension to add cacheFor to AutoDisposeFutureProvider
-extension CacheForExtension on AutoDisposeRef {
+extension CacheForExtension on Ref {
   void cacheFor(Duration duration) {
     final timer = Timer(duration, invalidateSelf);
     onDispose(timer.cancel);
