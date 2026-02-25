@@ -1,0 +1,111 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'   # e.g. v1.2.3
+
+jobs:
+  build_and_release:
+    name: Build & Release AAB + APK
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # needed to create GitHub Release
+
+    steps:
+      # ── 1. Checkout ────────────────────────────────────────────────
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # ── 2. Toolchain ───────────────────────────────────────────────
+      - name: Set up Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.24.3'
+          channel: stable
+          cache: true
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      # ── 3. Android Signing ─────────────────────────────────────────
+      - name: Decode keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/stockswipe-release.jks
+
+      - name: Write key.properties
+        run: |
+          cat > android/key.properties <<EOF
+          storeFile=../stockswipe-release.jks
+          storePassword=${{ secrets.STORE_PASSWORD }}
+          keyAlias=${{ secrets.KEY_ALIAS }}
+          keyPassword=${{ secrets.KEY_PASSWORD }}
+          EOF
+
+      # ── 4. Extract version from tag ────────────────────────────────
+      - name: Set version
+        id: version
+        run: |
+          TAG="${GITHUB_REF#refs/tags/}"
+          echo "tag=$TAG" >> $GITHUB_OUTPUT
+          # Strip 'v' prefix for pubspec version
+          echo "version=${TAG#v}" >> $GITHUB_OUTPUT
+
+      # ── 5. Build AAB (Play Store) ──────────────────────────────────
+      - name: Build release AAB
+        run: |
+          flutter build appbundle \
+            --release \
+            --build-name=${{ steps.version.outputs.version }} \
+            --build-number=${{ github.run_number }}
+
+      # ── 6. Build split APKs (sideload / GitHub Release) ───────────
+      - name: Build release APKs
+        run: |
+          flutter build apk \
+            --release \
+            --split-per-abi \
+            --build-name=${{ steps.version.outputs.version }} \
+            --build-number=${{ github.run_number }}
+
+      # ── 7. Rename APKs with version ────────────────────────────────
+      - name: Rename APK artifacts
+        run: |
+          VERSION=${{ steps.version.outputs.tag }}
+          BUILD=${{ github.run_number }}
+          cd build/app/outputs/flutter-apk
+          for f in app-*-release.apk; do
+            mv "$f" "${f/app-/stockswipe-${VERSION}-build${BUILD}-}"
+          done
+
+      # ── 8. Create GitHub Release ───────────────────────────────────
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: "StockSwipe ${{ steps.version.outputs.tag }}"
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: |
+            build/app/outputs/bundle/release/app-release.aab
+            build/app/outputs/flutter-apk/stockswipe-*.apk
+
+      # ── 9. Upload AAB to Google Play (internal track) ─────────────
+      - name: Upload to Google Play
+        uses: r0adkll/upload-google-play@v1
+        # Remove the 'if' condition below once PLAY_SERVICE_ACCOUNT_JSON is set
+        if: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON != '' }}
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: com.stockswipe.stockswipe
+          releaseFiles: build/app/outputs/bundle/release/app-release.aab
+          track: internal
+          status: completed
+          whatsNewDirectory: distribution/whatsnew   # optional
