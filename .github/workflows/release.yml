@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write   # needed to create GitHub Release
+    env:
+      HAS_PLAY_SERVICE_ACCOUNT_JSON: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON != '' }}
 
     steps:
       # ── 1. Checkout ────────────────────────────────────────────────
@@ -101,7 +103,7 @@ jobs:
       - name: Upload to Google Play
         uses: r0adkll/upload-google-play@v1
         # Remove the 'if' condition below once PLAY_SERVICE_ACCOUNT_JSON is set
-        if: secrets.PLAY_SERVICE_ACCOUNT_JSON != ''
+        if: env.HAS_PLAY_SERVICE_ACCOUNT_JSON == 'true'
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
           packageName: com.stockswipe.stockswipe
