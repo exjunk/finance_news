@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../../../core/constants/app_constants.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../providers/preferences_provider.dart';
 
@@ -18,21 +17,21 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   int _currentPage = 0;
 
   final _pages = [
-    _OnboardingPage(
+    const _OnboardingPage(
       icon: Icons.swipe,
       title: 'Swipe Through the Market',
       description:
           'Swipe RIGHT to save a story\nSwipe LEFT to skip it\nSwipe UP to read the full article',
       color: AppColors.primary,
     ),
-    _OnboardingPage(
+    const _OnboardingPage(
       icon: Icons.trending_up,
       title: 'Real-Time Market Data',
       description:
           'Live NIFTY 50, SENSEX, BANK NIFTY prices. Top gainers and losers. All in one place.',
       color: AppColors.bull,
     ),
-    _OnboardingPage(
+    const _OnboardingPage(
       icon: Icons.psychology,
       title: 'Smart Sentiment Analysis',
       description:
@@ -193,10 +192,11 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 selected: sel,
                 onSelected: (_) {
                   setState(() {
-                    if (sel)
+                    if (sel) {
                       _selectedTopics.remove(topic);
-                    else
+                    } else {
                       _selectedTopics.add(topic);
+                    }
                   });
                 },
               );

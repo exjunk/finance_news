@@ -2,7 +2,6 @@
 import 'package:xml/xml.dart';
 import 'package:dio/dio.dart';
 import '../../../core/constants/api_constants.dart';
-import '../../../core/errors/exceptions.dart';
 import '../../models/article_model.dart';
 
 class RssDatasource {

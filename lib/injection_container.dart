@@ -1,5 +1,4 @@
 // lib/injection_container.dart
-import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'data/datasources/local/database.dart';
 import 'data/datasources/local/local_datasource.dart';

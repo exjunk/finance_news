@@ -14,12 +14,10 @@ class AppTheme {
       primary: AppColors.primary,
       secondary: AppColors.primaryLight,
       surface: AppColors.surfaceDark,
-      background: AppColors.backgroundDark,
       error: AppColors.bear,
       onPrimary: AppColors.backgroundDark,
       onSecondary: AppColors.backgroundDark,
       onSurface: AppColors.textPrimaryDark,
-      onBackground: AppColors.textPrimaryDark,
       onError: Colors.white,
     ),
     scaffoldBackgroundColor: AppColors.backgroundDark,
@@ -90,12 +88,12 @@ class AppTheme {
       thickness: 0.5,
     ),
     switchTheme: SwitchThemeData(
-      thumbColor: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) return AppColors.primary;
+      thumbColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) return AppColors.primary;
         return AppColors.textSecondaryDark;
       }),
-      trackColor: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
+      trackColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
           return AppColors.primary.withOpacity(0.4);
         }
         return AppColors.borderDark;
@@ -131,12 +129,10 @@ class AppTheme {
       primary: AppColors.primary,
       secondary: AppColors.primaryLight,
       surface: AppColors.surfaceLight,
-      background: AppColors.backgroundLight,
       error: AppColors.bear,
       onPrimary: AppColors.backgroundDark,
       onSecondary: AppColors.backgroundDark,
       onSurface: AppColors.textPrimaryLight,
-      onBackground: AppColors.textPrimaryLight,
       onError: Colors.white,
     ),
     scaffoldBackgroundColor: AppColors.backgroundLight,
@@ -207,12 +203,12 @@ class AppTheme {
       thickness: 0.5,
     ),
     switchTheme: SwitchThemeData(
-      thumbColor: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) return AppColors.primary;
+      thumbColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) return AppColors.primary;
         return AppColors.textSecondaryLight;
       }),
-      trackColor: MaterialStateProperty.resolveWith((states) {
-        if (states.contains(MaterialState.selected)) {
+      trackColor: WidgetStateProperty.resolveWith((states) {
+        if (states.contains(WidgetState.selected)) {
           return AppColors.primary.withOpacity(0.4);
         }
         return AppColors.borderLight;

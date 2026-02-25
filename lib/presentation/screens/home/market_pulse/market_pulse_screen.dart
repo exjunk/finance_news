@@ -7,7 +7,6 @@ import '../../../../core/utils/number_formatter.dart';
 import '../../../../core/utils/time_formatter.dart';
 import '../../../../domain/entities/stock_quote.dart';
 import '../../../providers/market_provider.dart';
-import '../../../widgets/error_view.dart';
 import '../../../widgets/shimmer_card.dart';
 
 class MarketPulseScreen extends ConsumerWidget {
@@ -34,7 +33,7 @@ class MarketPulseScreen extends ConsumerWidget {
               SliverToBoxAdapter(
                 child: _IndexCardsRow(ref: ref),
               ),
-              SliverToBoxAdapter(
+              const SliverToBoxAdapter(
                 child: _SectorHeatmap(),
               ),
               SliverToBoxAdapter(

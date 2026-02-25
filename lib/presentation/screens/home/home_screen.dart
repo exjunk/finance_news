@@ -1,7 +1,6 @@
 // lib/presentation/screens/home/home_screen.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../core/theme/app_colors.dart';
 import 'swipe_feed/swipe_feed_screen.dart';
 import 'market_pulse/market_pulse_screen.dart';
 import 'watchlist/watchlist_screen.dart';

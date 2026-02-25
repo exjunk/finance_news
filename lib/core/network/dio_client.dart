@@ -25,7 +25,7 @@ class DioClient {
       LogInterceptor(
         requestBody: false,
         responseBody: false,
-        logPrint: (obj) => null, // suppress in release, enable in debug
+        logPrint: (obj) {}, // suppress in release, enable in debug
       ),
       _RetryInterceptor(_dio),
       _ErrorInterceptor(),

@@ -1,6 +1,5 @@
 // lib/data/datasources/remote/yahoo_finance_datasource.dart
 import '../../../core/constants/api_constants.dart';
-import '../../../core/errors/exceptions.dart';
 import '../../../core/network/dio_client.dart';
 import '../../models/stock_model.dart';
 import '../../models/market_index_model.dart';

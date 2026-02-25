@@ -44,7 +44,7 @@ class GNewsDatasource {
 
         final data = resp.data as Map<String, dynamic>;
         if (data['errors'] != null) {
-          throw ApiRateLimitException(source: 'GNews');
+          throw const ApiRateLimitException(source: 'GNews');
         }
         final articles = (data['articles'] as List<dynamic>?) ?? [];
         for (final item in articles) {

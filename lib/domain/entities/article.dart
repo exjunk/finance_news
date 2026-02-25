@@ -35,7 +35,7 @@ class Article {
   });
 
   int get readingTimeMinutes {
-    final text = '${title} ${description ?? ''}';
+    final text = '$title ${description ?? ''}';
     const wordsPerMinute = 200;
     final count = text.trim().split(RegExp(r'\s+')).length;
     return (count / wordsPerMinute).ceil().clamp(1, 60);

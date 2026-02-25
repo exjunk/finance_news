@@ -7,7 +7,6 @@ import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../injection_container.dart';
 import '../../../providers/preferences_provider.dart';
-import '../../search/search_screen.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
@@ -51,7 +50,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             return ListView(
               padding: const EdgeInsets.symmetric(vertical: 8),
               children: [
-                _SectionHeader(title: 'SETTINGS'),
+                const _SectionHeader(title: 'SETTINGS'),
 
                 // Appearance
                 _SectionCard(
@@ -163,10 +162,10 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                 _SectionCard(
                   title: 'About',
                   children: [
-                    ListTile(
-                      leading: const Icon(Icons.info_outline),
-                      title: const Text('Version'),
-                      trailing: const Text(AppConstants.appVersion,
+                    const ListTile(
+                      leading: Icon(Icons.info_outline),
+                      title: Text('Version'),
+                      trailing: Text(AppConstants.appVersion,
                           style: TextStyle(color: AppColors.textSecondaryDark)),
                     ),
                     const Divider(),

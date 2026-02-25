@@ -9,11 +9,9 @@ import '../../../../core/constants/app_constants.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../domain/entities/article.dart';
 import '../../../../injection_container.dart';
-import '../../../providers/market_provider.dart';
 import '../../../providers/news_provider.dart';
 import '../../../providers/preferences_provider.dart';
 import '../../../widgets/market_ticker_bar.dart';
-import '../../../widgets/offline_banner.dart';
 import '../../../widgets/shimmer_card.dart';
 import '../../../widgets/error_view.dart';
 import 'news_card.dart';
@@ -27,8 +25,7 @@ class SwipeFeedScreen extends ConsumerStatefulWidget {
 
 class _SwipeFeedScreenState extends ConsumerState<SwipeFeedScreen> {
   final _swiperController = AppinioSwiperController();
-  bool _isOffline = false;
-  String? _dismissedArticleId;
+  final bool _isOffline = false;
   List<Article> _articles = [];
   int _currentIndex = 0;
 
@@ -56,7 +53,6 @@ class _SwipeFeedScreenState extends ConsumerState<SwipeFeedScreen> {
         break;
       case AxisDirection.left:
         HapticFeedback.lightImpact();
-        _dismissedArticleId = article.id;
         await newsRepo.dismissArticle(article.id);
         _showUndoSnackBar(article);
         break;
@@ -82,13 +78,13 @@ class _SwipeFeedScreenState extends ConsumerState<SwipeFeedScreen> {
 
   void _showSavedSnackBar() {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: const Row(children: [
+      const SnackBar(
+        content: Row(children: [
           Icon(Icons.bookmark, color: AppColors.bull, size: 16),
           SizedBox(width: 8),
           Text('Saved to watchlist'),
         ]),
-        duration: const Duration(seconds: 2),
+        duration: Duration(seconds: 2),
       ),
     );
   }
@@ -102,7 +98,6 @@ class _SwipeFeedScreenState extends ConsumerState<SwipeFeedScreen> {
         action: SnackBarAction(
           label: 'Undo',
           onPressed: () async {
-            final newsRepo = ref.read(newsRepositoryProvider);
             // Restore article by marking as not dismissed (save then unsave workaround)
             // In a real app you'd have a restoreArticle method
           },

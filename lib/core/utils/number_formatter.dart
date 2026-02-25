@@ -31,7 +31,7 @@ class NumberFormatter {
     for (int i = rest.length; i > 0; i -= 2) {
       groups.insert(0, rest.substring(i < 2 ? 0 : i - 2, i));
     }
-    return '${groups.join(',')},${last3}';
+    return '${groups.join(',')},$last3';
   }
 
   /// Formats a percentage change: +1.23%, -0.45%
