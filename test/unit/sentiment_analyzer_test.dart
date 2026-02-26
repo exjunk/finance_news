@@ -1,6 +1,6 @@
 // test/unit/sentiment_analyzer_test.dart
 import 'package:flutter_test/flutter_test.dart';
-import 'package:stockswipe/core/utils/sentiment_analyzer.dart';
+import 'package:finswipe/core/utils/sentiment_analyzer.dart';
 
 void main() {
   group('SentimentAnalyzer', () {

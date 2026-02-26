@@ -1,6 +1,6 @@
 // test/unit/ticker_extractor_test.dart
 import 'package:flutter_test/flutter_test.dart';
-import 'package:stockswipe/core/utils/ticker_extractor.dart';
+import 'package:finswipe/core/utils/ticker_extractor.dart';
 
 void main() {
   group('TickerExtractor', () {

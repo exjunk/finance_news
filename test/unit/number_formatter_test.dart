@@ -1,6 +1,6 @@
 // test/unit/number_formatter_test.dart
 import 'package:flutter_test/flutter_test.dart';
-import 'package:stockswipe/core/utils/number_formatter.dart';
+import 'package:finswipe/core/utils/number_formatter.dart';
 
 void main() {
   group('NumberFormatter', () {
