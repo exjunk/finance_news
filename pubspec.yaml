@@ -1,4 +1,4 @@
-name: stockswipe
+name: finswipe
 description: Swipe through Indian stock market news
 publish_to: 'none'
 version: 1.0.0+1
@@ -59,9 +59,26 @@ dev_dependencies:
   riverpod_generator: ^2.3.9
   flutter_lints: ^3.0.1
   mocktail: ^1.0.3
+  flutter_launcher_icons: ^0.14.4
+  flutter_native_splash: ^2.4.4
 
 flutter:
   uses-material-design: true
   assets:
     - assets/lottie/
     - assets/images/
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/images/stock_swipe_icon.png"
+  adaptive_icon_background: "#121212"
+  adaptive_icon_foreground: "assets/images/stock_swipe_icon.png"
+
+flutter_native_splash:
+  color: "#121212"
+  image: "assets/images/stock_swipe_icon.png"
+  android_12:
+    image: "assets/images/stock_swipe_icon.png"
+    icon_background_color: "#121212"

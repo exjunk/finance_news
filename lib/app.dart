@@ -49,7 +49,7 @@ class StockSwipeApp extends ConsumerWidget {
     final isDark = prefsAsync.value?.isDarkMode ?? true;
 
     return MaterialApp.router(
-      title: 'StockSwipe',
+      title: 'FinSwipe',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
