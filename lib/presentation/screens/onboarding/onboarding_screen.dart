@@ -64,7 +64,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final totalPages = _pages.length + 2; // pages + topics + api
+    final totalPages = _pages.length + 1; // pages + topics
     return Scaffold(
       backgroundColor: AppColors.backgroundDark,
       body: SafeArea(
@@ -101,7 +101,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 children: [
                   ..._pages.map((p) => _buildInfoPage(p)),
                   _buildTopicsPage(),
-                  _buildApiKeyPage(),
                 ],
               ),
             ),
@@ -207,47 +206,6 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     );
   }
 
-  Widget _buildApiKeyPage() {
-    final alphaController = TextEditingController(text: 'demo');
-    return Padding(
-      padding: const EdgeInsets.all(32),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Text('API Key Setup',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontWeight: FontWeight.w700)),
-          const SizedBox(height: 8),
-          const Text(
-              'Optional: Get a free Alpha Vantage key for live stock prices. '
-              'RSS feeds work without any key.',
-              style: TextStyle(
-                  color: AppColors.textSecondaryDark, fontSize: 15, height: 1.5)),
-          const SizedBox(height: 24),
-          TextField(
-            controller: alphaController,
-            decoration: const InputDecoration(
-              labelText: 'Alpha Vantage Key',
-              hintText: 'demo',
-              helperText: 'Free key at alphavantage.co — 25 req/day',
-            ),
-            onChanged: (v) async {
-              await ref.read(preferencesProvider.notifier).setAlphaVantageKey(v);
-            },
-          ),
-          const SizedBox(height: 20),
-          const Text(
-            '⚡ You can add more API keys later in Settings → API Keys',
-            style: TextStyle(
-                color: AppColors.textSecondaryDark, fontSize: 13),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 class _OnboardingPage {
