@@ -15,7 +15,9 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace = "com.stockswipe.stockswipe"
     compileSdk = 35
-    ndkVersion = "25.1.8937393"
+    // NDK 27+ links .so files with 16 KB ELF segment alignment, satisfying
+    // the Google Play "16 KB page size" requirement (mandatory from Aug 2025).
+    ndkVersion = "27.2.12479018"
 
     compileOptions {
         coreLibraryDesugaringEnabled true
