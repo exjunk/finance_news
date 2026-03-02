@@ -48,11 +48,23 @@ android {
     buildTypes {
         release {
             signingConfig = signingConfigs.release
-            minifyEnabled = false
-            shrinkResources = false
+            // Enable R8 full-mode minification so the Play Store can generate a
+            // deobfuscation (mapping) file and analyse crashes/ANRs correctly.
+            minifyEnabled = true
+            shrinkResources = true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
             signingConfig = signingConfigs.debug
+            minifyEnabled = false
+        }
+    }
+
+    // Package FULL native debug symbols in the App Bundle so the Play Store can
+    // analyse native crashes and ANRs without a separate symbol upload.
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging = false
         }
     }
 }
