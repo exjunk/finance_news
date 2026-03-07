@@ -38,12 +38,52 @@ jobs:
       - name: Analyze
         run: flutter analyze --no-fatal-infos
 
-      - name: Run tests
+      - name: Run tests with coverage
         run: flutter test --coverage
 
-      - name: Upload coverage
+      - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         if: always()
         with:
           files: coverage/lcov.info
           fail_ci_if_error: false
+
+      # Share the coverage report with the sonar_scan job
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-lcov
+          path: coverage/lcov.info
+          retention-days: 1
+
+  # ---------------------------------------------------------------------------
+  # SonarQube / SonarCloud code inspection
+  # Runs after tests pass so coverage data is available.
+  # Required secrets: SONAR_TOKEN, SONAR_HOST_URL
+  # ---------------------------------------------------------------------------
+ # sonar_scan:
+ #   name: SonarQube Scan
+ #   runs-on: ubuntu-latest
+ #   needs: analyze_and_test
+    # Only run when secrets are present (skip on forks/PRs without secrets)
+ #  if: ${{ vars.SONAR_HOST_URL != '' }}
+
+ #   steps:
+ #     - name: Checkout
+ #       uses: actions/checkout@v4
+ #       with:
+          # Fetch full history for SonarQube blame/diff analysis
+ #         fetch-depth: 0
+
+ #     - name: Download coverage report
+ #       uses: actions/download-artifact@v4
+ #       with:
+ #         name: coverage-lcov
+ #         path: coverage
+
+ #     - name: SonarQube Scan
+ #       uses: SonarSource/sonarqube-scan-action@v5
+ #       env:
+ #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+ #         SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+

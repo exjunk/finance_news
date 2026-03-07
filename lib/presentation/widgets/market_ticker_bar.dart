@@ -119,50 +119,54 @@ class _ScrollingTicker extends StatelessWidget {
     return Container(
       width: 180,
       padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            item.label,
-            style: GoogleFonts.dmSans(
-              fontSize: 11,
-              fontWeight: FontWeight.w600,
-              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        alignment: Alignment.centerLeft,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              item.label,
+              style: GoogleFonts.dmSans(
+                fontSize: 11,
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+              ),
             ),
-          ),
-          const SizedBox(width: 6),
-          Text(
-            item.value,
-            style: GoogleFonts.jetBrainsMono(
-              fontSize: 11,
-              fontWeight: FontWeight.w700,
-              color: Theme.of(context).colorScheme.onSurface,
+            const SizedBox(width: 6),
+            Text(
+              item.value,
+              style: GoogleFonts.jetBrainsMono(
+                fontSize: 11,
+                fontWeight: FontWeight.w700,
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
             ),
-          ),
-          const SizedBox(width: 4),
-          Icon(
-            isPos ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-            color: changeColor,
-            size: 16,
-          ),
-          Text(
-            '${isPos ? '+' : ''}${item.change.toStringAsFixed(2)}%',
-            style: GoogleFonts.jetBrainsMono(
-              fontSize: 10,
+            const SizedBox(width: 4),
+            Icon(
+              isPos ? Icons.arrow_drop_up : Icons.arrow_drop_down,
               color: changeColor,
-              fontWeight: FontWeight.w600,
+              size: 16,
             ),
-          ),
-          Container(
-            width: 1,
-            height: 16,
-            margin: const EdgeInsets.only(left: 12),
-            color: Theme.of(context)
-                .colorScheme
-                .onSurface
-                .withOpacity(0.1),
-          ),
-        ],
+            Text(
+              '${isPos ? '+' : ''}${item.change.toStringAsFixed(2)}%',
+              style: GoogleFonts.jetBrainsMono(
+                fontSize: 10,
+                color: changeColor,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            Container(
+              width: 1,
+              height: 16,
+              margin: const EdgeInsets.only(left: 12),
+              color: Theme.of(context)
+                  .colorScheme
+                  .onSurface
+                  .withOpacity(0.1),
+            ),
+          ],
+        ),
       ),
     );
   }

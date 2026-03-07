@@ -1,4 +1,5 @@
 // lib/main.dart
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -24,19 +25,29 @@ void main() async {
     ),
   );
 
-  // Initialize timezone data
+  // Initialize timezone data (synchronous — no risk of throwing)
   tz.initializeTimeZones();
 
-  // Initialize notifications
-  final notifService = NotificationService();
-  await notifService.initialize();
-  await notifService.requestPermission();
-  await notifService.scheduleMarketOpenNotification();
-  await notifService.scheduleMarketCloseNotification();
-
+  // Start the app immediately so the reviewer/user sees the UI right away
   runApp(
     const ProviderScope(
       child: StockSwipeApp(),
     ),
   );
+
+  // Initialise notifications in the background AFTER the app is visible.
+  // Wrapped in try/catch so a notification failure never crashes the app.
+  unawaited(_initNotifications());
+}
+
+Future<void> _initNotifications() async {
+  try {
+    final notifService = NotificationService();
+    await notifService.initialize();
+    await notifService.requestPermission();
+    await notifService.scheduleMarketOpenNotification();
+    await notifService.scheduleMarketCloseNotification();
+  } catch (_) {
+    // Non-fatal — the app continues to work without scheduled notifications.
+  }
 }
