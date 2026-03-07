@@ -10,7 +10,7 @@ import '../helpers/app_wrapper.dart';
 
 void main() {
   group('OnboardingScreen', () {
-    Widget _buildOnboarding({bool didSetTopics = false}) {
+    Widget buildOnboarding() {
       final router = GoRouter(
         initialLocation: '/onboarding',
         routes: [
@@ -35,21 +35,21 @@ void main() {
 
     testWidgets('shows first page heading "Swipe Through the Market"',
         (WidgetTester tester) async {
-      await tester.pumpWidget(_buildOnboarding());
+      await tester.pumpWidget(buildOnboarding());
       await tester.pump();
       expect(find.text('Swipe Through the Market'), findsOneWidget);
     });
 
     testWidgets('shows "Continue" button on first page',
         (WidgetTester tester) async {
-      await tester.pumpWidget(_buildOnboarding());
+      await tester.pumpWidget(buildOnboarding());
       await tester.pump();
       expect(find.text('Continue'), findsOneWidget);
     });
 
     testWidgets('tapping Continue advances to page 2',
         (WidgetTester tester) async {
-      await tester.pumpWidget(_buildOnboarding());
+      await tester.pumpWidget(buildOnboarding());
       await tester.pump();
 
       await tester.tap(find.text('Continue'));
@@ -60,7 +60,7 @@ void main() {
 
     testWidgets('tapping Continue twice reaches Smart Sentiment page',
         (WidgetTester tester) async {
-      await tester.pumpWidget(_buildOnboarding());
+      await tester.pumpWidget(buildOnboarding());
       await tester.pump();
 
       await tester.tap(find.text('Continue'));
@@ -73,7 +73,7 @@ void main() {
 
     testWidgets('topics page shows all 9 topic chips',
         (WidgetTester tester) async {
-      await tester.pumpWidget(_buildOnboarding());
+      await tester.pumpWidget(buildOnboarding());
       await tester.pump();
 
       // Navigate through 3 info pages to reach the topics page
@@ -90,7 +90,7 @@ void main() {
 
     testWidgets('selecting a topic chip marks it selected',
         (WidgetTester tester) async {
-      await tester.pumpWidget(_buildOnboarding());
+      await tester.pumpWidget(buildOnboarding());
       await tester.pump();
 
       for (int i = 0; i < 3; i++) {
@@ -112,7 +112,7 @@ void main() {
     });
 
     testWidgets('"Get Started" button navigates to /', (WidgetTester tester) async {
-      await tester.pumpWidget(_buildOnboarding());
+      await tester.pumpWidget(buildOnboarding());
       await tester.pump();
 
       for (int i = 0; i < 3; i++) {

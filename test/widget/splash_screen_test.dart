@@ -14,7 +14,7 @@ import '../helpers/app_wrapper.dart';
 
 void main() {
   group('SplashScreen', () {
-    Widget _buildSplash() {
+    Widget buildSplash() {
       final router = GoRouter(
         initialLocation: '/splash',
         routes: [
@@ -37,7 +37,7 @@ void main() {
     }
 
     testWidgets('renders StockSwipe title', (WidgetTester tester) async {
-      await tester.pumpWidget(_buildSplash());
+      await tester.pumpWidget(buildSplash());
       // Just the build frame — before any navigation timer fires
       await tester.pump();
       expect(find.text('StockSwipe'), findsOneWidget);
@@ -45,13 +45,13 @@ void main() {
 
     testWidgets('renders "Swipe Through the Market" tagline',
         (WidgetTester tester) async {
-      await tester.pumpWidget(_buildSplash());
+      await tester.pumpWidget(buildSplash());
       await tester.pump();
       expect(find.text('Swipe Through the Market'), findsOneWidget);
     });
 
     testWidgets('renders trending_up icon', (WidgetTester tester) async {
-      await tester.pumpWidget(_buildSplash());
+      await tester.pumpWidget(buildSplash());
       await tester.pump();
       expect(find.byIcon(Icons.trending_up), findsOneWidget);
     });

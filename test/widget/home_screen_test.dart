@@ -41,14 +41,14 @@ void main() {
     when(() => mockMarket.isMarketOpen()).thenAnswer((_) async => true);
   });
 
-  void _setWideScreen(WidgetTester tester) {
+  void setWideScreen(WidgetTester tester) {
     tester.view.physicalSize = const Size(2400, 1080);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.resetPhysicalSize);
     addTearDown(tester.view.resetDevicePixelRatio);
   }
 
-  Widget _buildHome({int initialIndex = 0}) {
+  Widget buildHome({int initialIndex = 0}) {
     final router = GoRouter(
       initialLocation: '/',
       routes: [
@@ -80,8 +80,8 @@ void main() {
   group('HomeScreen', () {
     testWidgets('renders BottomNavigationBar with 4 items',
         (WidgetTester tester) async {
-      _setWideScreen(tester);
-      await tester.pumpWidget(_buildHome());
+      setWideScreen(tester);
+      await tester.pumpWidget(buildHome());
       await tester.pump();
 
       expect(find.byType(BottomNavigationBar), findsOneWidget);
@@ -93,8 +93,8 @@ void main() {
 
     testWidgets('FAB visible on Feed tab (index 0)',
         (WidgetTester tester) async {
-      _setWideScreen(tester);
-      await tester.pumpWidget(_buildHome(initialIndex: 0));
+      setWideScreen(tester);
+      await tester.pumpWidget(buildHome(initialIndex: 0));
       await tester.pump();
       expect(find.byType(FloatingActionButton), findsOneWidget);
     });
@@ -105,24 +105,24 @@ void main() {
 
     testWidgets('FAB not visible when initialIndex is Markets (1)',
         (WidgetTester tester) async {
-      _setWideScreen(tester);
-      await tester.pumpWidget(_buildHome(initialIndex: 1));
+      setWideScreen(tester);
+      await tester.pumpWidget(buildHome(initialIndex: 1));
       await tester.pump();
       expect(find.byType(FloatingActionButton), findsNothing);
     });
 
     testWidgets('FAB not visible when initialIndex is Saved (2)',
         (WidgetTester tester) async {
-      _setWideScreen(tester);
-      await tester.pumpWidget(_buildHome(initialIndex: 2));
+      setWideScreen(tester);
+      await tester.pumpWidget(buildHome(initialIndex: 2));
       await tester.pump();
       expect(find.byType(FloatingActionButton), findsNothing);
     });
 
     testWidgets('FAB not visible when initialIndex is Settings (3)',
         (WidgetTester tester) async {
-      _setWideScreen(tester);
-      await tester.pumpWidget(_buildHome(initialIndex: 3));
+      setWideScreen(tester);
+      await tester.pumpWidget(buildHome(initialIndex: 3));
       await tester.pump();
       expect(find.byType(FloatingActionButton), findsNothing);
     });

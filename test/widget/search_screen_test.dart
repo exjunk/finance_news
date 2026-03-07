@@ -11,7 +11,7 @@ import 'package:go_router/go_router.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../helpers/article_factory.dart';
-import '../helpers/app_wrapper.dart';
+
 
 // ---------------------------------------------------------------------------
 // Mocks
@@ -32,7 +32,7 @@ void main() {
     when(() => mockNews.getSavedArticles()).thenAnswer((_) async => []);
   });
 
-  Widget _buildSearch() {
+  Widget buildSearch() {
     final router = GoRouter(
       initialLocation: '/search',
       routes: [
@@ -76,13 +76,13 @@ void main() {
   group('SearchScreen', () {
     testWidgets('shows "Search News" empty state initially',
         (WidgetTester tester) async {
-      await tester.pumpWidget(_buildSearch());
+      await tester.pumpWidget(buildSearch());
       await tester.pumpAndSettle();
       expect(find.text('Search News'), findsOneWidget);
     });
 
     testWidgets('shows quick-tag chips on screen', (WidgetTester tester) async {
-      await tester.pumpWidget(_buildSearch());
+      await tester.pumpWidget(buildSearch());
       await tester.pump();
       expect(find.text('IPO'), findsOneWidget);
       expect(find.text('Nifty'), findsOneWidget);
@@ -93,7 +93,7 @@ void main() {
 
     testWidgets('tapping IPO chip populates the search TextField',
         (WidgetTester tester) async {
-      await tester.pumpWidget(_buildSearch());
+      await tester.pumpWidget(buildSearch());
       await tester.pump();
 
       await tester.tap(find.widgetWithText(ActionChip, 'IPO'));
@@ -105,7 +105,7 @@ void main() {
 
     testWidgets('typing a query shows articles from mock',
         (WidgetTester tester) async {
-      await tester.pumpWidget(_buildSearch());
+      await tester.pumpWidget(buildSearch());
       await tester.pump();
 
       await tester.enterText(find.byType(TextField), 'IPO');
@@ -116,7 +116,7 @@ void main() {
 
     testWidgets('shows "No Results" for empty result query',
         (WidgetTester tester) async {
-      await tester.pumpWidget(_buildSearch());
+      await tester.pumpWidget(buildSearch());
       await tester.pump();
 
       await tester.enterText(find.byType(TextField), 'nodata');

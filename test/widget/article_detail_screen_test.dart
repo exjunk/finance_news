@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
+// ignore: depend_on_referenced_packages
 import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
 
 import '../helpers/article_factory.dart';
@@ -41,7 +42,7 @@ class _FakeWebViewPlatform extends WebViewPlatform {
 class _FakeController extends PlatformWebViewController {
   _FakeController(super.p) : super.implementation();
   @override Future<void> setJavaScriptMode(JavaScriptMode m) async {}
-  @override Future<void> setNavigationDelegate(PlatformNavigationDelegate d) async {}
+  Future<void> setNavigationDelegate(PlatformNavigationDelegate d) async {}
   @override Future<void> loadRequest(LoadRequestParams p) async {}
   @override Future<void> setBackgroundColor(Color c) async {}
   @override Future<void> setPlatformNavigationDelegate(PlatformNavigationDelegate d) async {}
@@ -90,7 +91,7 @@ Widget _wrap(Widget child) {
 // ---------------------------------------------------------------------------
 
 void main() {
-  late void Function(FlutterErrorDetails)? _savedError;
+  late void Function(FlutterErrorDetails)? savedError;
 
   setUpAll(() {
     WebViewPlatform.instance = _FakeWebViewPlatform();
@@ -99,15 +100,15 @@ void main() {
   setUp(() {
     // Suppress UnimplementedError that bubbles up from WebViewWidget in tests.
     // This lets the rest of the screen (summary card, action buttons) render.
-    _savedError = FlutterError.onError;
+    savedError = FlutterError.onError;
     FlutterError.onError = (FlutterErrorDetails d) {
       if (d.exception is UnimplementedError) return;
-      _savedError?.call(d);
+      savedError?.call(d);
     };
   });
 
   tearDown(() {
-    FlutterError.onError = _savedError;
+    FlutterError.onError = savedError;
   });
 
   group('ArticleDetailScreen', () {
